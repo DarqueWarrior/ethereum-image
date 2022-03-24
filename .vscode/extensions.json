@@ -1,0 +1,11 @@
+{
+    "recommendations": [
+        "ms-python.python",
+		"ms-python.vscode-pylance",
+		"juanblanco.solidity",
+		"hosho.solidity-debugger",
+		"msjsdiag.vscode-react-native",
+		"ms-azuretools.vscode-docker",
+		"tintinweb.vscode-vyper"
+    ]
+}
