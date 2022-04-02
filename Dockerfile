@@ -28,12 +28,16 @@ RUN apt-get update && apt-get -yq install software-properties-common make g++ &&
     apt-get clean && apt-get autoclean
 
 # ** [Optional] Uncomment this section to install additional packages. **
-RUN apt-get update && export DEBIAN_FRONTEND=noninteractive && \
+RUN apt-get update && \
+    export DEBIAN_FRONTEND=noninteractive && \
     curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash - && \
     apt-get -yq install --no-install-recommends nodejs python3-venv python3-pip python3-dev && \
-    apt-get clean && apt-get autoclean
+    apt-get autoclean -y && \
+    apt-get clean -y && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN npm install --global --no-audit hardhat truffle ganache
+RUN npm install --global --no-audit hardhat truffle ganache yarn && \
+    npm cache clean --force
 
 USER vscode
 
@@ -69,14 +73,11 @@ RUN wget https://solc-bin.ethereum.org/linux-amd64/solc-linux-amd64-v0.6.12+comm
 RUN echo 'deb http://ppa.launchpad.net/ethereum/ethereum/ubuntu bionic main' > /etc/apt/sources.list.d/ethereum.list && \
     echo 'deb-src http://ppa.launchpad.net/ethereum/ethereum/ubuntu bionic main' >> /etc/apt/sources.list.d/ethereum.list && \
     apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 2A518C819BE37D2C2031944D1C52189C923F6CA9 && \
-    apt-get update && apt-get -yq install --no-install-recommends ethereum && \
-    apt-get clean && apt-get autoclean
-
-# Yarn
-RUN apt-get remove -y cmdtest yarn && \
-    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update && apt-get -yq install yarn
+    apt-get update && \
+    apt-get -yq install --no-install-recommends ethereum && \
+    apt-get autoclean -y && \
+    apt-get clean -y && \
+    rm -rf /var/lib/apt/lists/*
 
 # Setting up workspace folder for use with Docker Development Environments 
 # without this
@@ -92,9 +93,3 @@ COPY .vscode/*.* /com.docker.devenvironments.code/.vscode
 
 # Removes warning from docker for desktop
 RUN groupadd -r docker -g 433
-
-# Clean up
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get autoremove -y && \
-    apt-get clean -y
