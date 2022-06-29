@@ -26,3 +26,10 @@ VS Code extensions:
 - Solidity Debugger
 - Vyper
 
+## Quick Start
+1. Install [VS Code](https://code.visualstudio.com/Download)
+2. Install [Docker for Desktop](https://www.docker.com/products/docker-desktop/)
+3. Install [Remote - Containers VS Code extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+4. Clone this repository `git clone https://github.com/DarqueWarrior/ethereum-image.git`
+5. In VS Code: click the Docker extension icon in the left pane, click `Open Image` and select the folder containing the cloned repository
+6. Allow some time for the dependencies to download, then you're ready to code!
